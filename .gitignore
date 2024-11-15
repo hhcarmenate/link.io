@@ -1,0 +1,16 @@
+# Docker
+docker-compose.override.yml
+.dockerignore
+.env.docker
+
+# Nginx
+nginx.conf
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
