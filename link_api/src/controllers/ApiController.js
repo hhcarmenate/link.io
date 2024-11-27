@@ -1,4 +1,4 @@
-import connect from "../database/conexion.js";
+import connect from "../database/db.js";
 
 export class ApiController {
     static async apiInfo(req, res) {
