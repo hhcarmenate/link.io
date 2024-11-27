@@ -1,14 +1,23 @@
 import express from 'express';
 import dotenv from 'dotenv'
 import { apiRouter } from './routes/apiRoutes.js'
+import cors from 'express'
+import connect from './database/db.js'
 
 // Loading env vars
 dotenv.config()
 
 const app = express();
 
-app.use(express.json());
+// Connect to MongoDB
+connect()
+
+
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.disable('z-powered-by')
+
 app.use('/api/v1', apiRouter)
 
 const PORT = process.env.PORT || 5000;
