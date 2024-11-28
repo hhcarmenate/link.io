@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv'
-import { apiRouter } from './routes/apiRoutes.js'
+import { apiRouter } from './routes/apiRouter.js'
 import cors from 'express'
 import connect from './database/db.js'
 

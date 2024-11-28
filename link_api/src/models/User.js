@@ -51,13 +51,17 @@ class User {
      * @return {Promise<Object>} A promise that resolves to the newly created user object.
      */
     async createUser(userData) {
-        const user = new this.model(userData);
-        const savedUser = await user.save();
+        try {
+            const user = new this.model(userData);
+            const savedUser = await user.save();
 
-        const userObject = savedUser.toObject();
-        delete userObject.password;
+            const userObject = savedUser.toObject();
+            delete userObject.password;
 
-        return userObject;
+            return userObject;
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     /**
