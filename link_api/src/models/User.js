@@ -36,6 +36,10 @@ class User {
             next();
         });
 
+        schema.methods.comparePassword = function(candidatePassword) {
+            return bcrypt.compare(candidatePassword, this.password)
+        }
+
         this.model = mongoose.model('User', schema, 'users')
     }
 
@@ -83,6 +87,10 @@ class User {
         return this.model.findByIdAndDelete(userId, {
             new: true
         })
+    }
+
+    async comparePassword(user, candidatePassword){
+        return user.comparePassword(candidatePassword)
     }
 
 }
