@@ -13,15 +13,18 @@ export class AuthController {
      */
     static async register(req, res) {
         const { name, email, password } = req.body
+        console.log('registering new user', name, email, password)
 
         try {
-            const user = new User({ name, email, password })
-            await user.save()
+            const user = await User.createUser({ name, email, password })
 
             res.status(201).json({
-                message: 'User registered successfully!'
+                message: 'User registered successfully!',
+                user
             })
         } catch (err) {
+            console.error(err)
+
             res.status(500).json({
                 message: 'Error registering the user',
                 error: err
@@ -44,7 +47,7 @@ export class AuthController {
         const { email, password } = req.body
 
         try {
-            const user = User.findOne({ email: email})
+            const user = await User.model.findOne({ email})
 
             if (!user) {
                 return res.status(404).json({ message: 'User not found!' })
@@ -61,6 +64,8 @@ export class AuthController {
 
             return res.status(200).json({ token, message: 'User logged successfully!'})
         } catch (err) {
+            console.log(err)
+
             res.status(500).json({
                 message: 'Error logging in',
                 error: err
