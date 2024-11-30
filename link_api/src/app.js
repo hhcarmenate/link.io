@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import { apiRouter } from './routes/apiRouter.js'
 import cors from 'express'
 import connect from './database/db.js'
+import authRouter from "./routes/authRouter.js";
 
 // Loading env vars
 dotenv.config()
@@ -18,6 +19,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.disable('z-powered-by')
 
+app.use('', authRouter)
 app.use('/api/v1', apiRouter)
 
 const PORT = process.env.PORT || 5000;
