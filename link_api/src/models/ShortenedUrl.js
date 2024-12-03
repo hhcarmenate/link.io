@@ -24,8 +24,11 @@ class ShortenedUrl {
             }
         )
 
+        schema.index({ userId: 1 })
+
         this.model = mongoose.model('ShortenedUrl', schema, 'ShortenedUrl');
     }
+
 
     async createShortenedUrl(originalUrl, userId) {
         let shortCode = this.generateUniqueCode()
@@ -40,7 +43,47 @@ class ShortenedUrl {
             return await shortenedUrl.save()
         } catch (e) {
             console.error('Error saving the shortened URL:', e)
+            throw e
+        }
+    }
 
+    async getShortenedUrlByUserId(userId) {
+        try {
+            return await this.model.find({ userId }).populate('userId').exec();
+        } catch (e) {
+            console.error('Error retrieving shortened URLs for user:', e);
+            throw e;
+        }
+    }
+
+    async getShortenedUrlByShortcode(shortcode) {
+        try {
+            return await this.model.findOne({ shortCode }).populate('userId').exec();
+        } catch (e) {
+            console.error('Error retrieving URL for shortCode:', e);
+            throw e;
+        }
+    }
+
+    async updateShortenedUrl(shortenedId, shortenedData) {
+        try {
+            return this.model.findByIdAndUpdate(shortenedId, shortenedData, {
+                new: true,
+                runValidators: true
+            })
+        } catch (e) {
+            console.error('Error updating the shortened url data')
+            throw e
+        }
+    }
+
+    async deleteShortenedUrl(shortenedId) {
+        try {
+            return this.model.findByIdAndDelete(shortenedId, {
+                new: true
+            })
+        } catch (e) {
+            console.error('Error deleting the shortened url data')
             throw e
         }
     }
