@@ -26,11 +26,11 @@ class ShortenedUrl {
 
         schema.index({ userId: 1 })
 
-        this.model = mongoose.model('ShortenedUrl', schema, 'ShortenedUrl');
+        this.model = mongoose.model('ShortenedUrl', schema, 'shortened_urls');
     }
 
 
-    async createShortenedUrl(originalUrl, userId) {
+    async createShortenedUrl({originalUrl, userId}) {
         let shortCode = this.generateUniqueCode()
 
         const shortenedUrl = new this.model({

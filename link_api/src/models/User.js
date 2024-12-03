@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 const SALT_ROUNDS = 10
 
-class User {
+export class User {
     constructor() {
         const schema = new mongoose.Schema({
             name: {
@@ -98,4 +98,4 @@ class User {
 
 }
 
-export default new User
+export default new User()

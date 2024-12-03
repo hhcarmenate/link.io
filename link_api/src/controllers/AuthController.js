@@ -13,7 +13,6 @@ export class AuthController {
      */
     static async register(req, res) {
         const { name, email, password } = req.body
-        console.log('registering new user', name, email, password)
 
         try {
             const user = await User.createUser({ name, email, password })

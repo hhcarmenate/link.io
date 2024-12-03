@@ -5,6 +5,6 @@ import {validateLoginUser, validateRegisterUser} from "../validators/authValidat
 const authRouter = Router()
 
 authRouter.post('/register', validateRegisterUser, AuthController.register)
-authRouter.post('/login', validateLoginUser,AuthController.login)
+authRouter.post('/login', validateLoginUser, AuthController.login)
 
 export default authRouter;
