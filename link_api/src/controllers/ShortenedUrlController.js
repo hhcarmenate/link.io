@@ -39,9 +39,11 @@ export class ShortenedUrlController {
         const userId = req.params.userId
 
         try {
-            const user = await ShortenedUrl.createShortenedUrl({ originalUrl, userId })
+            const shortedUrl = await ShortenedUrl.createShortenedUrl({ originalUrl, userId })
+
+
             res.status(200).json({
-                data: user,
+                data: shortedUrl,
                 message: 'Shortened created successfully'
             })
         } catch (err) {

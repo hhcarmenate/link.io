@@ -1,8 +1,17 @@
 import {body, param, validationResult} from "express-validator";
+import userInstance from "../models/User.js";
 
 export const validateShortenedCreation = [
     body('originalUrl').isURL().notEmpty().withMessage('Original Url is required'),
-    param('id').isMongoId().withMessage('Invalid user ID format'),
+    param('userId')
+        .isMongoId().withMessage('Invalid user ID format')
+        .bail()
+        .custom(async (userId) => {
+            const user = await userInstance.getUserById(userId);
+            if (!user) {
+                throw new Error('User ID does not exist');
+            }
+        }),
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
@@ -14,7 +23,7 @@ export const validateShortenedCreation = [
 ]
 
 export const validateGetShortenedUrls = [
-    param('id').isMongoId().withMessage('Invalid user id format'),
+    param('userId').isMongoId().withMessage('Invalid user id format'),
     (req, res, next) => {
         const errors  = validationResult(req)
         if (!errors.isEmpty()) {
