@@ -74,7 +74,6 @@ class User {
     }
 
     async getUserById(userId) {
-        console.log('console in model', userId)
         return this.model.findById(userId).select('-password')
     }
 
